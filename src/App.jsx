@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import ContactList from './components/ContactList/ContactList';
+import contactsArray from './contact.json';
+import SearchBox from './components/SearchBox/SearchBox';
+import ContactForm from './components/ContactForm/ContactForm';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [contacts, setContacts] = useState(contactsArray);
+  const [filter, setFilter] = useState('');
+  const filteredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()));
+
+  const addContact = newContact => {
+    setContacts(prevContacts => [...prevContacts, newContact]);
+  };
+
+  const deleteContact = contactId => {
+    setContacts(prevContacts => prevContacts.filter(contact => contact.id !== contactId));
+  };
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>Phonebook</h1>
+        <ContactForm addContact={addContact} />
+        <SearchBox value={filter} onChange={setFilter} />
+        <ContactList contacts={filteredContacts} onDelete={deleteContact} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
