@@ -1,17 +1,16 @@
 import Contact from '../Contact/Contact';
+import { nanoid } from 'nanoid';
 import s from './ContactList.module.css';
 
 const ContactList = ({ contacts, onDelete }) => {
   return (
-    <div className={s.listContacts}>
+    <ul className={s.listContacts}>
       {contacts.map(contact => (
-        <div className={s.itemContact} key={contact.id}>
-          <p>{contact.name}</p>
-          <p>{contact.number}</p>
-          <button onClick={() => onDelete(contact.id)}>Delete</button>
-        </div>
+        <li className={s.itemContact} key={nanoid()}>
+          <Contact data={contact} onDelete={onDelete} />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
 

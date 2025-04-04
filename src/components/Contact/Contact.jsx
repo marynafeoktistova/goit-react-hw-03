@@ -1,11 +1,17 @@
-const Contact = ({ name, number }) => {
-  return (
-    <div>
-      <h2>{name}</h2>
-      <p>{number}</p>
+import s from './Contact.module.css';
 
-      <button> Delete </button>
+const Contact = ({ data, onDelete }) => {
+  return (
+    <div className={s.containerContac}>
+      <div className={s.thumbContact}>
+        <p className={s.nameContact}>{data.name}</p>
+        <p className={s.nameContact}>{data.number}</p>
+      </div>
+      <button className={s.buttonDelete} onClick={() => onDelete(data.id)}>
+        Delete
+      </button>
     </div>
   );
 };
+
 export default Contact;
